@@ -1,4 +1,10 @@
 build/
 libtorch/
+libtorch.zip
 .cache/
 .idea/
+.vscode/
+compile_commands.json
+*.o
+*.so
+*.a
