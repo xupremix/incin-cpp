@@ -122,6 +122,11 @@ remaining libtorch device types.
 other dimension at index `0`; the shape reflects that. Use `select` when you
 want to keep the rank of the unselected dimensions.
 
+The shape arguments are short aliases: `Tp<K, Dim>` is a `TensorPair` used by
+`repeat` and `top`, `Tr<Start, End, Dim>` is a half-open `TensorRange` used by
+`narrow` and `slice`, and `Ip<Dim, Indices...>` is an `IndicesPair` used by
+`select` and `select_only`.
+
 The variadic forms `unsqueeze<Dims...>()` and `squeeze<Dims...>()` take
 dimensions in increasing order, relative to the original shape. A dimension that
 does not exist, or a `squeeze` dimension whose size is not `1`, is a compile

@@ -325,15 +325,15 @@ struct Shape<First, Second, Rest...> {
 };
 
 ///
-/// TensorPair<Dim, K> / Tp
+/// TensorPair<K, Dim> / Tp
 ///
-template <int64_t DimT, int64_t KT>
+template <int64_t KT, int64_t DimT>
 struct TensorPair {
-  static constexpr int64_t DIM = DimT;
   static constexpr int64_t K = KT;
+  static constexpr int64_t DIM = DimT;
 };
-template <int64_t Dim, int64_t K>
-using Tp = TensorPair<Dim, K>;
+template <int64_t K, int64_t Dim>
+using Tp = TensorPair<K, Dim>;
 
 ///
 /// TensorRange<Start, End, Dim> / Tr

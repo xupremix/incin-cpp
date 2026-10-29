@@ -245,11 +245,11 @@ void test_arange() {
 void test_repeat_top_narrow_slice() {
   const auto a = mat22();
 
-  const auto repeated = a.repeat<Tp<0, 2>, Tp<1, 3>>();
+  const auto repeated = a.repeat<Tp<2, 0>, Tp<3, 1>>();
   static_assert(std::is_same_v<decltype(repeated), const Tensor<Shape<4, 6>>>);
   INCIN_CHECK(torch::equal(repeated.to_torch(), a.to_torch().repeat({2, 3})));
 
-  const auto top = mat33().top<Tp<0, 2>, Tp<1, 2>>();
+  const auto top = mat33().top<Tp<2, 0>, Tp<2, 1>>();
   static_assert(std::is_same_v<decltype(top), const Tensor<Shape<2, 2>>>);
   INCIN_CHECK(torch::equal(
       top.to_torch(),
