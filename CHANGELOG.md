@@ -41,6 +41,8 @@ Rename and first functional release.
 ### Added
 
 - Runtime value tests for every implemented operation (`tests/tensor_test.cpp`).
+- CTest compile-fail tests for the type system (`tests/compile_fail/`), which
+  check both rejection and the expected compiler diagnostic.
 - Elementwise math, reductions, `item<T>()`, `allclose`, `clone`, `detach`,
   `full`/`rand`/`randn`, `from_torch` validation, and `to_torch()`.
 - GitHub Actions CPU build/test workflow.

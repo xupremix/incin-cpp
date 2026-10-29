@@ -195,8 +195,11 @@ The old `evolcpp` name and `namespace evol` are gone; this is `incin-cpp` and
 ## Status
 
 Early but usable. Every operation listed above is wired to libtorch and covered
-by runtime value tests, in addition to the compile-time checks. There is no
-typed autograd, module, dataset, or serialization layer yet.
+by runtime value tests, in addition to the compile-time checks. The compile-time
+guarantees are themselves covered by CTest compile-fail fixtures in
+`tests/compile_fail/`, which assert that invalid programs are rejected with the
+expected diagnostic. There is no typed autograd, module, dataset, or
+serialization layer yet.
 
 ## License
 

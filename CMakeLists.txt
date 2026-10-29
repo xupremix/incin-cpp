@@ -48,6 +48,39 @@ if(INCIN_CPP_BUILD_TESTS)
   add_executable(incin_cpp_tests tests/tensor_test.cpp)
   target_link_libraries(incin_cpp_tests PRIVATE incin::incin)
   add_test(NAME incin_cpp_tests COMMAND incin_cpp_tests)
+
+  # Compile-fail tests. Each fixture must be rejected and the compiler output
+  # must contain the diagnostic listed after the `|`, so the test cannot pass
+  # for an unrelated reason.
+  set(
+    INCIN_CPP_COMPILE_FAIL_TESTS
+    "matmul_inner_mismatch|the last dimension of the left operand must match"
+    "transpose_duplicate|The permutation cannot contain duplicates"
+    "reshape_element_count|reshape must preserve the number of elements"
+    "arange_length|the shape must match the arange length"
+    "narrow_past_end|TensorRange::END is past the end of the dimension"
+  )
+  foreach(entry IN LISTS INCIN_CPP_COMPILE_FAIL_TESTS)
+    string(REPLACE "|" ";" fields "${entry}")
+    list(GET fields 0 fixture)
+    list(GET fields 1 expected)
+    add_executable(incin_compile_fail_${fixture} EXCLUDE_FROM_ALL
+      tests/compile_fail/${fixture}.cpp)
+    target_link_libraries(incin_compile_fail_${fixture} PRIVATE incin::incin)
+    add_test(
+      NAME compile_fail_${fixture}
+      COMMAND
+        ${CMAKE_COMMAND}
+        -DBUILD_DIR=${CMAKE_BINARY_DIR}
+        -DTARGET=incin_compile_fail_${fixture}
+        -DEXPECTED=${expected}
+        -DCONFIG=$<CONFIG>
+        -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/expect_compile_failure.cmake
+    )
+    set_tests_properties(compile_fail_${fixture} PROPERTIES
+      RUN_SERIAL TRUE
+      TIMEOUT 300)
+  endforeach()
 endif()
 
 include(GNUInstallDirs)

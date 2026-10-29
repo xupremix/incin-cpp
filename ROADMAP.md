@@ -6,7 +6,7 @@ it closer to what [Incin](https://github.com/xupremix/incin) provides.
 ## Near term
 
 - [ ] Add a CUDA job to CI (the current workflow is CPU-only).
-- [ ] Add compile-fail tests: a small set of intentionally invalid programs that
+- [x] Add compile-fail tests: a small set of intentionally invalid programs that
       must not compile, checked by CMake/CTest.
 - [ ] Add broadcasting support (`broadcast_to`, `expand`) with compile-time
       compatibility checks.
