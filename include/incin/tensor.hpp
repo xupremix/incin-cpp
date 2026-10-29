@@ -223,7 +223,7 @@ INCIN_DEF_DTYPE_IMPL_BASE(float, kFloat);
 INCIN_DEF_DTYPE_IMPL_BASE(double, kDouble);
 INCIN_DEF_DTYPE_IMPL_BASE(long double, kLong);
 INCIN_DEF_DTYPE_IMPL_BASE(long long, kLong);
-INCIN_DEF_DTYPE_IMPL_BASE(unsigned long long, kLong);
+INCIN_DEF_DTYPE_IMPL_BASE(unsigned long long, kUInt64);
 
 #undef INCIN_DEF_DTYPE_IMPL_BASE
 

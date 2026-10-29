@@ -122,6 +122,12 @@ remaining libtorch device types.
 other dimension at index `0`; the shape reflects that. Use `select` when you
 want to keep the rank of the unselected dimensions.
 
+The variadic forms `unsqueeze<Dims...>()` and `squeeze<Dims...>()` take
+dimensions in increasing order, relative to the original shape. A dimension that
+does not exist, or a `squeeze` dimension whose size is not `1`, is a compile
+error. `top<...>()` follows the original API and narrows each named dimension
+from index `0`, so it is a typed `narrow` rather than a top-k value selection.
+
 ## Compile-time examples
 
 ```cpp
