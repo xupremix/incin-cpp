@@ -38,3 +38,25 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build --output-on-failure
+
+      - name: Verify the installed package is relocatable
+        run: |
+          prefix="$RUNNER_TEMP/incin-cpp-install"
+          moved="$RUNNER_TEMP/incin-cpp-moved"
+          cmake --install build --prefix "$prefix"
+
+          # The installed package must not embed paths from the build machine.
+          if grep -R -F "$GITHUB_WORKSPACE" "$prefix"; then
+            echo "installed package embeds build-host paths" >&2
+            exit 1
+          fi
+
+          # Relocate the install prefix and build the consumer from its new
+          # location, using only find_package(incin-cpp) and libtorch.
+          rm -rf "$moved"
+          mv "$prefix" "$moved"
+          cmake -S tests/consumer -B "$RUNNER_TEMP/consumer-build" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$moved;$GITHUB_WORKSPACE/libtorch"
+          cmake --build "$RUNNER_TEMP/consumer-build" -j"$(nproc)"
+          "$RUNNER_TEMP/consumer-build/incin_consumer"

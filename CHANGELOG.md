@@ -34,6 +34,9 @@ Rename and first functional release.
 - `AreAllSameAs` and the shape predicates handle empty packs.
 - `pad` accepts a scalar value instead of a dtype tag.
 - `matmul` accepts a `const` operand.
+- The installed CMake package is relocatable: it links the imported `torch`
+  target instead of the expanded `TORCH_LIBRARIES` list, which embedded
+  absolute paths to the build machine's libtorch and CUDA libraries.
 
 ### Added
 

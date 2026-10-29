@@ -86,6 +86,31 @@ CMake options:
 | `INCIN_CPP_BUILD_TESTS` | `ON` | Build and register the test suite |
 | `INCIN_CPP_BUILD_EXAMPLES` | `ON` | Build `incin_example` |
 
+### Installing and consuming
+
+```bash
+cmake --install build --prefix /path/to/prefix
+```
+
+```cmake
+find_package(incin-cpp REQUIRED)
+target_link_libraries(app PRIVATE incin::incin)
+```
+
+The installed package is relocatable. It records the imported `torch` target
+rather than the expanded `TORCH_LIBRARIES` list, so no build-machine paths are
+baked into the export; `find_dependency(Torch)` resolves libtorch on the
+consumer's machine. Add libtorch to `CMAKE_PREFIX_PATH` when configuring the
+consumer:
+
+```bash
+cmake -S app -B app/build \
+  -DCMAKE_PREFIX_PATH="/path/to/prefix;/path/to/libtorch"
+```
+
+See `tests/consumer/` for a complete example; CI installs the package, moves
+the prefix, and builds that consumer against the relocated copy.
+
 ## API
 
 All dimensions and devices are template parameters. The default dtype/device is

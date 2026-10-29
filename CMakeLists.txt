@@ -29,7 +29,14 @@ target_include_directories(
 
 target_compile_features(incin_cpp INTERFACE cxx_std_17)
 target_compile_options(incin_cpp INTERFACE ${TORCH_CXX_FLAGS})
-target_link_libraries(incin_cpp INTERFACE "${TORCH_LIBRARIES}")
+
+# Link the imported `torch` target rather than the expanded TORCH_LIBRARIES
+# list. The latter contains absolute paths to the libtorch/CUDA libraries of
+# the machine that built incin-cpp, which makes the installed package
+# non-relocatable. The `torch` target is re-created by find_dependency(Torch)
+# on the consumer machine and already propagates include directories, compile
+# requirements, and the transitive link interface.
+target_link_libraries(incin_cpp INTERFACE torch)
 
 if(INCIN_CPP_BUILD_EXAMPLES)
   add_executable(incin_example examples/matmul.cpp)

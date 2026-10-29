@@ -22,7 +22,8 @@ it closer to what [Incin](https://github.com/xupremix/incin) provides.
 - [ ] Neural-network modules mirroring Incin: `Linear`, `Conv2d`, activations,
       normalization, losses, and an optimizer interface.
 - [ ] Dataset and data-loader abstractions over libtorch.
-- [ ] A CMake package config that downstream projects can `find_package`.
+- [x] A relocatable CMake package config that downstream projects can
+      `find_package` (consumer smoke-tested in CI).
 - [ ] Documentation site generated from the headers.
 
 ## Long term
